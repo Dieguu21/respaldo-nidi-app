@@ -1,0 +1,119 @@
+<style>
+p {text-align: center;}
+thead {text-align: center;}
+h1 {text-align: center;}
+</style>
+
+
+<% if current_user %>
+  <h1 class="title is-1 is-family-monospace has-text-primary mt-4 ml-6"> Lista de Turnos</h1>
+  <!-- Comentario -->
+
+  <% @turns.each do |turn|
+      if turn.user_id != current_user.id
+        %>
+    <div class="box ml-6 mr-6 mb-6">
+    <div class="columns">
+    
+          <div class="column is-one-third">
+              <p class="subtitle has-text-weight-bold"> Chofer </p>
+
+
+
+              <p style="text-align:center;">
+              <%id_chofer = turn.user_id
+              chofer = User.where(id: id_chofer)%>
+              <%=chofer[0].name + " " + chofer[0].last_name%> </p>
+
+
+              <% lista_turnos_chofer = Turn.where(user_id: id_chofer)%>
+              <%contador_reseñas = 0 %>
+              <%stars_total = 0 %>
+              <% lista_turnos_chofer.each do |turno_chofer|
+                lista_reseñas_a_chofer = Rating.where(turn_id: turno_chofer.id)
+                
+                lista_reseñas_a_chofer.each do |reseña|
+
+                  stars_total = stars_total + reseña.stars
+                  contador_reseñas = contador_reseñas + 1%>
+
+                <%end%>
+              <%end%>
+
+            <p style="text-align:center;">Estrellas:
+              <% if contador_reseñas != 0 %> 
+                <%=stars_total.div(contador_reseñas)%> 
+              <%end%>
+            </p>
+
+          </div>
+
+          
+
+          <div class="column is-one-third">
+            <p class="subtitle has-text-weight-bold"> Información del turno</p>
+            <h3 style="text-align:left;"> <%= "Nombre: " + turn.name %> </h3>
+            <h3 style="text-align:left;"> <%= "Cupos: " + turn.av_space.to_s + " de " + turn.max_space.to_s%> </h3>
+            <h3 style="text-align:left;"> <%= "Dirección origen: " + turn.origin%> </h3>
+            <h3 style="text-align:left;"> <%= "Dirección destino: " + turn.destination%> </h3>
+            <h3 style="text-align:left;"> <%= "Fecha de salida: " + turn.date.to_s%> </h3>
+            <h3 style="text-align:left;"> <%= "Hora de salida: " + turn.time.strftime('%H:%M').to_s%> </h3>
+          </div>
+
+          <div class="column is-one-third">
+            <p class="subtitle has-text-weight-bold"> Inscribir </p>
+            <% lista_requests_current_user = Request.where(user_id: current_user.id)%>
+
+            <% ya_inscrito = 0 %>
+            <% lista_requests_current_user.each do |request_current_user|%>
+                <%if request_current_user.turn_id == turn.id
+                  ya_inscrito = ya_inscrito + 1 %>
+                <% end %>
+            <% end %>
+
+            <%if ya_inscrito == 0 %>
+              <p style="margin-top: 10px"><%= link_to "Inscribirse", new_request_path(turn), :class => "button" %></p>
+            <%else%>
+              <p style="margin-top: 10px"><%= link_to "Inscribirse", new_request_path(turn), :disabled =>"",:class => "button" %></p>
+            <% end %>
+
+          </div>
+
+    </div>
+    </div>      
+        <% end %>
+    <% end %>
+    
+<% else %>
+
+  <%= render 'welcome'%>
+
+  <h1 class="title is-1 is-family-monospace has-text-primary mt-4 ml-6"> Lista de Turnos</h1>
+  <!-- Comentario -->
+  <% @turns.each do |turn|%>
+  <div class="box ml-6 mr-6 mb-6">
+    <div class="columns">
+  
+        <div class="column is-one-third">
+            <p class="subtitle has-text-weight-bold"> Chofer </p>
+            <p> <%=turn.user.name + " " + turn.user.last_name%> </p>
+        </div>
+
+        <div class="column is-one-third">
+          <p class="subtitle has-text-weight-bold"> Información</p>
+          <h2> <%= "Cupos: " + turn.av_space.to_s + " de " + turn.max_space.to_s%> </h2>
+          <h2> <%= "Dirección origen: " + turn.origin%> </h2>
+          <h2> <%= "Dirección destino: " + turn.destination%> </h2>
+          <h2> <%= "Fecha de salida: " + turn.date.to_s%> </h2>
+          <h2> <%= "Hora de salida: " + turn.time.strftime('%H:%M').to_s%> </h2>
+        </div>
+
+        <div class="column is-one-third">
+          <p class="subtitle has-text-weight-bold"> Inscribir </p>
+          <p class="text-align: center;"> <%= link_to "Inscribirse", new_user_session_path, :class => "button is-primary" %> </p>
+        </div>
+
+    </div>
+  </div>
+  <%end%>
+<%end%>

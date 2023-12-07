@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>NiDi App</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script defer src= "https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+  </head>
+
+  <body class="has-background-primary-light" >
+    <!-- Agregado en setup devise (inicio) -->
+    <% if current_user %>
+    
+    <nav class="navbar is-transparent is-spaced mx-6" width="device-width" role="navigation" aria-label="main navigation">
+
+
+      <div class="navbar-brand ml-4">
+
+        <a class="navbar-item" href=<%=turns_all_path%>>
+          <img src="https://i.ibb.co/0t1Shzc/nidi-app-logo-wobg.png" alt="Nidi App" border="0">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div class="navbar-menu" id="navbarNidiApp" >
+        <div class="navbar-start ml-5">
+
+          <%= link_to "Mi cuenta", users_path(current_user.id), :class => "navbar-item"%>
+
+          <%= link_to "Mis chats", "/chats", :class => "navbar-item"%>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Chofer
+            </a>
+            <div class="navbar-dropdown is-boxed">
+              <%= link_to "Mis publicaciones", turns_index_path, :class => "navbar-item" %>
+              <%= link_to "Solicitudes", "/solicitudes", :class => "navbar-item" %>
+            </div>
+          </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Pasajero
+            </a>
+            <div class="navbar-dropdown is-boxed">
+              <%= link_to "Turnos", turns_all_path, :class => "navbar-item" %>
+              <%= link_to "Mis inscripciones", "/requests", method: :get, :class => "navbar-item" %>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="navbar-end">
+          
+          <div class="navbar-item">
+            <div class="buttons">
+              
+                <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "button is-light"%>
+
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+    </nav>
+
+    <% else %>
+
+
+
+
+      
+    <nav class="navbar is-transparent is-spaced mx-6" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand ml-4">
+
+        <a class="navbar-item" href=<%=turns_all_path%>>
+          <img src="https://i.ibb.co/0t1Shzc/nidi-app-logo-wobg.png" alt="Nidi App" border="0">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div class="navbar-menu" id="navbarNidiApp" >
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+
+                <%= link_to "Iniciar Sesión", new_user_session_path, :class => "button is-light"%>
+                <%= link_to "Registrarme", new_user_registration_path, :class => "button is-primary" %>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+
+
+
+
+
+    
+    <% end %>
+    <!-- Agregado en setup devise (fin) -->
+
+
+
+
+      
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Agregado en setup devise paso 3 (inicio) -->
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <!-- Agregado en setup devise paso 3 (fin) -->
+
+    <%= yield %>
+  </body>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>NiDi App</strong> by <a href="https://github.com/namadatzis">Nicole Madatzis</a>, <a href="https://github.com/Nicolemarin">Nicole Marín</a> y <a href="https://github.com/Dieguu21">Diego Lillo</a>.
+      </p>
+    </div>
+  </footer>
+
+
+
+
+</html>

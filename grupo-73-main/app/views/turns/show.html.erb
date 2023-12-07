@@ -1,0 +1,19 @@
+
+<h1 style="text-align:center;"> Detalles del turno </h1>
+
+  <table style="margin:0 auto;">
+            <tr>
+            <td>
+                <ul style="border: solid 1px; text-align:left; margin:0 auto;">
+                <li> <%= "Espacio máximo: " + "#{@turn.max_space}" %> </li>   
+                <li> <%= "Espacio disponible: " + "#{@turn.av_space}" %> </li> 
+                <li> <%= "Lugar de origen: " + @turn.origin %> </li>     
+                <li> <%= "Lugar de destino: " + @turn.destination %> </li>  
+                <li> <%= "Fecha del viaje: " + "#{@turn.date}" %> </li>          
+                <li> <%= "Hora del viaje:" + "#{@turn.time}" %> </li>                
+                </ul>
+            </td>
+          <td>
+            <%= link_to "Volver", turns_index_path %> <br>
+          </td>
+  </table>

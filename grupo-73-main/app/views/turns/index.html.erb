@@ -1,0 +1,48 @@
+<style>
+.is-danger {width: 90%;}
+.is-warning {width: 90%;}
+.is-link {width: 90%;}
+h1 {text-align: center;}
+</style>
+
+<% if current_user %>
+  <!-- Comentario -->
+  <div class="columns is-mobile is-centered">
+  <div class="column is-full">
+    <h1 class="title is-1 is-family-monospace has-text-primary mt-4"> Mis publicaciones </h1>
+    <h1> <%= link_to "Crear un turno", new_turn_path, :class => "button is-primary mb-5"%> </h1>
+
+    <% @turns.each do |turn|%>
+        <div class="box">
+        <div class="columns">
+
+        <div class="column">
+          <ul>
+            <li> <%= "Nombre del turno: " + turn.name %> </li>
+            <li> <%= "Cupos: " + turn.av_space.to_s + " de " + turn.max_space.to_s%> </li>
+            <li> <%= "Dirección origen: " + turn.origin%> </li>
+            <li> <%= "Dirección destino: " + turn.destination%> </li>
+            <li> <%= "Fecha de salida: " + turn.date.to_s%> </li>
+            <li> <%= "Hora de salida: " + turn.time.strftime('%H:%M').to_s%> </li>
+          </ul>
+        </div>
+
+        <div class="column is-one-third">
+          <a href="/turns/new"> </a>
+          <%= link_to "Chat", chats_new_path(turn.id), :class => "button is-light is-link"%> <br>
+          <p class="mt-1"><%= link_to "Editar turno", edit_turn_path(turn.id), :class => "button is-light is-warning" %> <br> </p>
+          <p class="mt-1"><%= link_to "Eliminar turno", turn_path(turn), method: :delete, :class => "button is-light is-danger" %> </p>
+        </div>
+
+        </div>
+        </div>
+    <% end %>
+  </div>
+  </div>
+  
+
+<% else %>
+
+  <%= render 'welcome'%>
+
+<% end %>

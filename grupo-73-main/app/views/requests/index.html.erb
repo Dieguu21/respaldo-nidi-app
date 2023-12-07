@@ -1,0 +1,82 @@
+<style>
+p {text-align: center;}
+thead {text-align: center;}
+h1 {text-align: center;}
+.button {width: 90%;}
+</style>
+
+<% if current_user %>
+  <h1 class="title is-1 is-family-monospace has-text-primary mt-4 ml-6"> Mis Inscripciones</h1>
+
+  <!-- Comentario -->
+
+
+    <% @requests.each do |r| %>
+      <div class="box ml-6 mr-6 mb-6">
+        <div class="columns">
+          
+          <div class="column is-one-quarter">
+              <p class="subtitle has-text-weight-bold"> Chofer </p>
+              <p style="text-align:center;">
+                <%id_chofer = r.turn.user_id
+                chofer = User.where(id: id_chofer)%>
+                <%=chofer[0].name + " " + chofer[0].last_name%> </p>
+
+
+              <% lista_turnos_chofer = Turn.where(user_id: id_chofer)%>
+              <%contador_reseñas = 0 %>
+              <%stars_total = 0 %>
+              <% lista_turnos_chofer.each do |turno_chofer|
+                lista_reseñas_a_chofer = Rating.where(turn_id: turno_chofer.id)
+                
+                lista_reseñas_a_chofer.each do |reseña|
+
+                  stars_total = stars_total + reseña.stars
+                  contador_reseñas = contador_reseñas + 1%>
+
+                <%end%>
+              <%end%>
+
+
+
+              <p style="text-align:center;">Estrellas:
+                <% if contador_reseñas != 0 %> 
+                  <%=stars_total.div(contador_reseñas)%> 
+                <%end%>
+              </p>
+              
+          </div>
+          
+          <div class="column is-one-quarter">
+            <p class="subtitle has-text-weight-bold"> Información </p>
+            <h3 style="text-align:left;"> <%= "Nombre turno: " + r.turn.name%> </h3
+            <h3 style="text-align:left;"> <%= "Cupos: " + r.turn.av_space.to_s + " de " + r.turn.max_space.to_s%> </h3>
+            <h3 style="text-align:left;"> <%= "Dirección destino: " + r.turn.destination%> </h3>
+            <h3 style="text-align:left;"> <%= "Fecha de salida: " + r.turn.date.to_s%> </h3>
+          </div>
+
+          <div class="column is-one-quarter">
+            <p class="subtitle has-text-weight-bold"> Estado </p>
+              <a href="/turns/new"> </a>
+              <p style="text-align: center;"> <%= r.status %> </p>
+          </div>
+
+          <div class="column is-one-quarter">
+            <p class="subtitle has-text-weight-bold"> Acciones </p>
+            <p style="margin-top: 10px"><%= link_to 'Ver', requests_show_path(r.turn.id), :class => "button"%></p>
+            <p style="margin-top: 20px"><%= link_to 'Eliminar', requests_delete_path(r), method: :delete, data: { confirm: 'Estas seguro?' }, :class => "button is-danger" %></p>
+          </div>
+      </div>
+        </div>
+    <% end %>
+
+<% else %>
+
+  <h1>Bienvenido a NiDi App</h1>
+  <p>Debe iniciar sesión para poder utilizar las funciones.</p>
+
+<% end %>
+
+
+
+

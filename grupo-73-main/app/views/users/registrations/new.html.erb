@@ -1,0 +1,91 @@
+<style>
+h2 {text-align: center;}
+.button {width: 100%;}
+</style>
+
+<h2 class="title is-1 is-family-monospace has-text-primary mt-4">Registro de Usuario</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true }) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+  <div class="columns">
+
+    <div class="column is-4">
+    </div>
+    
+    <div class="column is-4">
+
+      <div class="box mb-6" style="width: 100%;">
+
+
+        <div class="field">
+          <%= f.label :image %><br />
+          <%= f.file_field :image, autofocus: true, autocomplete: "image"%>
+
+        </div>
+
+        <div class="field">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "input is-small"  %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password %>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "new-password",  :class => "input is-small"  %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => "input is-small"  %>
+        </div>
+
+        <!-- lo agregregamos nosotros por setup devise (inicio) -->
+        <div class="field">
+          <%= f.label :name %><br />
+          <%= f.text_field :name, autofocus: true, autocomplete: "nombre", :class => "input is-small"  %>
+        </div>
+
+        <div class="field">
+          <%= f.label :last_name %><br />
+          <%= f.text_field :last_name, autofocus: true, autocomplete: "apellido", :class => "input is-small"  %>
+        </div>
+
+        <div class="field">
+          <%= f.label :phone %><br />
+          <%= f.text_field :phone, autofocus: true, autocomplete: "celular", :class => "input is-small"  %>
+        </div>
+
+        <div class="field">
+          <%= f.label :patent %><br />
+          <%= f.text_field :patent, autofocus: true, autocomplete: "patente", :class => "input is-small" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :car_color %><br />
+          <%= f.text_field :car_color, autofocus: true, autocomplete: "color auto", :class => "input is-small"  %>
+        </div>
+
+        <div class="field">
+          <%= f.label :description %><br />
+          <%= f.text_field :description, autofocus: true, autocomplete: "descripción", :class => "input is-small"  %>
+        </div>
+
+        <!-- lo agregamos nosotros por setup devise (fin) -->
+
+        <div class="actions">
+          <%= f.submit "Sign up", :class => "button is-primary" %> 
+          <p class="mt-3"> <%= link_to "Log In", new_user_session_path, :class => "button" %> </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="column is-4">
+    </div>
+
+  </div>        
+<% end %>
+

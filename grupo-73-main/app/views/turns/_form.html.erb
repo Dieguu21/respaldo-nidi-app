@@ -1,0 +1,64 @@
+<style>
+h2 {text-align: center;}
+.button {width: 100%;}
+</style>
+
+<%= form_with(model:@turn, local:true) do |form|%>
+
+<div class="columns">
+    
+    <div class="column is-4">
+    </div>
+    
+    <div class="column is-4">
+
+        <div class="box mb-6" style="width: 100%;">
+
+
+            <div class="field">
+                <p class="mb-0 mt-0"><%= form.label "Nombre del turno", :class => "label" %> </p>
+            <%= form.text_field :name, :class => "input is-small"  %>
+            </div>
+
+
+            <div class="field">
+                <p class="mb-0 mt-0"><%= form.label "Dirección del origen", :class => "label" %> </p>
+                <%= form.text_field :origin, :class => "input is-small"  %>
+            </div>
+
+            <div class="field">
+                <p class="mb-0 mt-0"> <%= form.label "Dirección del destino", :class => "label" %> </p>
+                <div class="control">
+                    <%= form.text_field :destination, :class => "input is-small" %>
+                </div>
+            </div>
+
+            <div>
+                <p class="mb-0 mt-0"> <%= form.label "Fecha", :class => "label" %> </p>
+                <%= form.date_field :date, min:Time.now %>
+            </div>
+
+            <div>
+                <p class="mb-0 mt-3"> <%= form.label "Hora", :class => "label" %></p>
+                <%= form.time_field :time %>
+            </div>
+
+            <div class="field">
+                <p class="mb-0 mt-3"> <%= form.label "Cupos máximo", :class => "label" %> </p>
+                <%= form.text_field :max_space, :class => "input is-small" %>
+            </div>
+
+
+            <div class="field">
+                <p class="mb-3 mt-0"> <%= form.submit "Crear Turno", :class => "button is-primary" %> </p>
+                <%= link_to 'Volver', turns_index_path, :class => "button"%>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="column is-4">
+    </div>
+
+</div> 
+<% end %>

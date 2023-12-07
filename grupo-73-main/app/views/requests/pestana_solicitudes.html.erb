@@ -1,0 +1,90 @@
+<style>
+.button {width: 90%;}
+</style>
+
+<% if current_user %>
+  <!-- Comentario -->
+  <h1 class="title is-1 is-family-monospace has-text-primary mt-4 ml-6"> Lista de solicitudes a mis turnos </h1>
+
+  <% @mis_turnos.each do |turno|
+      requests = Request.where(turn_id: turno.id)
+      requests.each do |request|%>
+        <div class="box ml-6 mr-6 mb-6">
+          <div class="columns">
+
+            <div class="column is-one-fifth">
+              <p class="subtitle has-text-weight-bold"> Turno </p>
+              <div  text-align:left;">
+                <%= "Nombre: " + turno.name %> <br>
+                <%= "Origen: " + turno.origin %> <br>
+                <%= "Destino: " + turno.destination %> <br>
+              </div>
+            </div>
+
+            <div class="column is-one-fifth">
+              <p class="subtitle has-text-weight-bold"> Nombre del pasajero </p>
+              <div  text-align:left;">
+              <%= request.user.name + " " + request.user.last_name %>
+              </div> 
+            </div>
+
+            <div class="column is-one-fifth has-text-justified">
+              <p class="subtitle has-text-weight-bold"> Mensaje del pasajero </p>
+              <div  text-align:left;">
+                <%= request.description %>
+              </div>
+            </div>
+
+            <div class="column is-one-fifth">
+              <p class="subtitle has-text-weight-bold"> Estrellas del pasajero </p>
+              <div  text-align:left;">
+                <% id_pasajero = request.user_id %>
+                <% lista_turnos_pasajero = Turn.where(user_id: id_pasajero)%>
+                <%contador_reseñas = 0 %>
+                <%stars_total = 0 %>
+                <% lista_turnos_pasajero.each do |turno_pasajero|
+                  lista_reseñas_a_pasajero = Rating.where(turn_id: turno_pasajero.id)
+                  
+                  lista_reseñas_a_pasajero.each do |reseña|
+
+                    stars_total = stars_total + reseña.stars
+                    contador_reseñas = contador_reseñas + 1%>
+
+                  <%end%>
+                <%end%>
+
+
+                <% if contador_reseñas != 0 %> 
+                  <%=stars_total.div(contador_reseñas)%> 
+                <%end%>
+              </div>
+
+            </div>
+
+            <div class="column is-one-fifth">
+              <p class="subtitle has-text-weight-bold"> Acciones </p>
+              <%if request.status == "Pendiente"%>
+                <p style="margin-top: 10px"> <%= link_to 'Aceptar', requests_aceptar_path(request.id), :class => "button is-light is-success"%> </p>
+                <p style="margin-top: 20px"> <%= link_to 'Rechazar', requests_rechazar_path(request.id), :class => "button is-light is-danger" %> </p>
+              <%elsif request.status == "Aceptado"%>
+                <p style="margin-top: 10px"> <%= link_to 'Ver', requests_detalle_path(request.id), :class => "button is-light is-success"%> </p>
+              <%elsif request.status == "Rechazado"%>
+                <p style="margin-top: 10px"> <%= link_to 'Rechazado', solicitudes_path(), :disabled =>"", :class => "button is-danger is-light is-success"%> </p>
+              <%end%>
+            </div>
+
+          </div>
+        </div>
+      
+                 
+          
+
+      <% end %>  
+  <% end %>
+
+
+<% else %>
+  <h1>Bienvenido a NiDi App</h1>
+  <p>Debe iniciar sesión para poder utilizar las funciones.</p>
+
+<% end %>

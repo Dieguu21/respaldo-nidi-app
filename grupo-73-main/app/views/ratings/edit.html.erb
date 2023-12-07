@@ -1,0 +1,56 @@
+<style>
+h2 {text-align: center;}
+.button {width: 100%;}
+</style>
+
+<h2 class="title is-1 is-family-monospace has-text-primary mt-4">Editar Reseña</h2>
+
+<p><%= notice %></p>
+<%= form_with(model: @rating, method: :patch, url:ratings_update_path) do |form| %>
+<div class="columns">
+    <div class="column is-4">
+    </div>
+    
+    <div class="column is-4">
+
+        <div class="box mb-6" style="width: 100%;">
+
+            <div class= "field">
+                <%= form.label :"Usuario a calificar"%><br />
+                <%= form.text_field :user_id, autofocus: true, autocomplete: "user_id", readonly: true, :class => "input is-normal"  %>
+            </div>
+
+            <div class= "field">
+                <%= form.label :"Usuario que escribe la reseña"%><br />
+                <%= form.text_field :user_id, autofocus: true, autocomplete: "current_user.id", readonly: true, :class => "input is-normal"  %>
+            </div>
+
+            <div class= "field">
+                <%= form.label :"ID del turno"%><br />
+                <%= form.text_field :turn_id, autofocus: true, autocomplete: "turn_id", readonly: true, :class => "input is-normal"  %>
+            </div>
+
+
+            <div class= "field">
+                <%= form.label :"Calificación"%><br />
+                <%= form.text_field :stars, autofocus: true, autocomplete: "stars", :class => "input is-normal"  %>
+            </div>
+
+            <div class= "field">
+                <%= form.label :"Escribe una reseña"%><br />
+                <%= form.text_field :content, autofocus: true, autocomplete: "content", :class => "input is-normal"  %>
+            </div>
+
+            <div class="action">
+                <%= form.submit "Editar Reseña", :class => "button is-primary is-light" %>
+                <p class="mt-3"> <%= link_to 'Volver', ratings_path, :class => "button is-light" %> </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="column is-4">
+    </div>
+
+</div>
+<% end %>

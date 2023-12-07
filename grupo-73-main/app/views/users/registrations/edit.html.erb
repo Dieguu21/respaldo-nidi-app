@@ -1,0 +1,97 @@
+<style>
+h2 {text-align: center;}
+.button {width: 100%;}
+</style>
+
+<h2 class="title is-1 is-family-monospace has-text-primary mt-4">Editar Perfil</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+  
+  <div class="columns">
+
+    <div class="column is-4">
+    </div>
+    
+    <div class="column is-4">
+
+      <div class="box mb-6" style="width: 100%;">
+
+        <div class="field">
+          <%= f.label :email %> <br/>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", readonly: true, :class => "input is-normal" %>
+        </div>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <% end %>
+
+        <div class="field">
+          <%= f.label :password %> <i>(dejar en blanco para no cambiarla)</i><br />
+          <%= f.password_field :password, autocomplete: "new-password", :class => "input is-normal" %>
+          <% if @minimum_password_length %> <em> <%= @minimum_password_length %> caracteres mínimo</em>
+          <% end %>
+        </div>
+        
+        <div class="field">
+          <%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => "input is-normal" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :current_password %> <i>(Clave actual)</i><br />
+          <%= f.password_field :current_password, autocomplete: "current-password", :class => "input is-normal" %>
+        </div>
+
+        <!-- lo agregregamos nosotros por setup devise (inicio) -->
+        <div class="field">
+          <%= f.label :name %><br />
+          <%= f.text_field :name, autofocus: true, autocomplete: "nombre", :class => "input is-normal" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :last_name %><br />
+          <%= f.text_field :last_name, autofocus: true, autocomplete: "apellido", :class => "input is-normal" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :phone %><br />
+          <%= f.text_field :phone, autofocus: true, autocomplete: "celular", :class => "input is-normal" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :patent %><br />
+          <%= f.text_field :patent, autofocus: true, autocomplete: "patente", :class => "input is-normal" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :car_color %><br />
+          <%= f.text_field :car_color, autofocus: true, autocomplete: "color auto", :class => "input is-normal" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :description %><br />
+          <%= f.text_field :description, autofocus: true, autocomplete: "descripción", :class => "input is-normal" %>
+        </div>
+
+
+        <!-- lo agregamos nosotros por setup devise (fin) -->
+
+        <div class="actions">
+          <%= f.submit "Actualizar", :class=>"button is-primary"%>
+        </div>
+
+        <div class="field">
+          <h2 class="mt-3">¿Deseas eliminar tu cuenta? <%= button_to "Eliminar mi cuenta", registration_path(resource_name), data: { confirm: "¿Realmente quieres eliminar tu cuenta?" }, method: :delete, :class => "button is-danger" %></h2>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="column is-4">
+    </div>
+
+  </div>
+
+<% end %>
+

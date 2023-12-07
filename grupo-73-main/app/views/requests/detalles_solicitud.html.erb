@@ -1,0 +1,48 @@
+<style>
+p {text-align: center;}
+thead {text-align: center;}
+h1 {text-align: center;}
+.button {
+  width: 100%;}
+</style>
+
+<% if current_user %>
+
+  <h1 class="title is-1 is-family-monospace has-text-primary mt-4 ml-6"> Detalles del turno </h1>
+
+  <div class="box ml-6 mr-6 mb-6">
+    <div class="columns">
+      <div class="column is-half">
+          <p class="subtitle has-text-weight-bold" style="text-align:left;"> Pasajero </p>
+          <p style="text-align:center;"> <%=@pasajero.name + " " + @pasajero.last_name%> </p>
+          <p> <%= link_to 'Chat', chats_new_path(@turn.id), :class=> "button" %> </p>
+      </div>
+
+      <div class="column is-half">
+          <p class="subtitle has-text-weight-bold" style="text-align:left;"> Información </p>
+        <h2 class="subtitle is-size-50 has-text-weight-bold"> DATOS DEL TURNO </h2>
+        <h3 style="text-align:left;"> <%= "Cupos: " + @turn.av_space.to_s + " de " + @turn.max_space.to_s%> </h3>
+        <h3 style="text-align:left;"> <%= "Dirección origen: " + @turn.origin%> </h3>
+        <h3 style="text-align:left;"> <%= "Dirección destino: " + @turn.destination%> </h3>
+        <h3 style="text-align:left;"> <%= "Fecha de salida: " + @turn.date.to_s%> </h3>
+        <h3 style="text-align:left;"> <%= "Hora de salida: " + @turn.time.strftime('%H:%M').to_s%> </h3>
+        <h2 class="subtitle is-size-50 has-text-weight-bold mt-5"> DATOS DEL PASAJERO </h2>
+        <h3 style="text-align:left;"> <%= "Telefono: " + "#{@pasajero.phone}"  %>> </h3>
+        <h3 style="text-align:left;"> <%= "Mail: " + @pasajero.email%> </li> </h3>
+      </div>
+
+    </div>
+  </div>
+
+
+<% else %>
+
+  <h1>Bienvenido a NiDi App</h1>
+  <p>Debe iniciar sesión para poder utilizar las funciones.</p>
+
+<% end %>
+ 
+
+
+
+

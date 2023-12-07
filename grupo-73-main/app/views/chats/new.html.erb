@@ -1,0 +1,85 @@
+<style>
+p {text-align: center;}
+thead {text-align: center;}
+h2 {text-align: center;}
+.button {
+  width: 90%;
+  position: right;
+}
+</style>
+
+<% if current_user %>
+<div>
+  <h2 class="title is-1 is-family-monospace has-text-primary mt-4 ml-6"> Chat de turno: <%=@turno.name %> </h2>
+
+  <div class="box ml-6 mr-6 mb-6">
+    <div class="columns">
+      
+      <div class="column is-one-quarter">
+        <h1 class="subtitle has-text-weight-bold mb-0">Integrantes del turno:</h1>
+        <%if @turno.user.id == current_user.id%>
+          <li><%=@turno.user.name + " " + @turno.user.last_name %> (Chofer) (tú) </li>
+        <%else%>
+          <li><%=@turno.user.name + " " + @turno.user.last_name%> (Chofer)</li>
+        <%end%>
+
+        <%@requests.each do |request|%>
+        <%if request.status == "Aceptado"%>
+          <%if request.turn_id == @turno.id%>
+            <%if request.user_id == current_user.id%>
+              <li><%=request.user.name + " " + request.user.last_name%> (Pasajero) (tú) </li> 
+              <%else%>
+              <li><%=request.user.name + " " + request.user.last_name%> (Pasajero) </li> 
+            <%end%>
+          <%end%>
+          <%end%>
+        <%end%>
+
+        <div>
+          <br>
+          <h1 class="subtitle has-text-weight-bold mb-0">Chats:</h1>
+          <%@chats.each do |chat|%>
+            <%if chat.turn_id == @turno.id%>
+              <h1><%=chat.user.name + " " + chat.user.last_name%>: <%=chat.mensajes%> </h1> 
+
+            <%end%>
+          <%end%>
+          <br>
+        </div>
+
+      <%= form_with(model:@turn, local:true) do |form|%>
+
+        <div class="field">
+          <h1 class="subtitle has-text-weight-bold mb-0">Escribe aquí tu mensaje:</h1>
+          <%=form.text_field :mensajes, rows: 5, :size => "150px" %>
+        </div>
+
+        <div class="field">
+            <%= form.submit "Enviar", :class => "button" %>
+        </div>
+
+
+      </div>
+  </div>
+</div>
+
+
+  
+
+
+
+
+<% end %>
+
+
+
+
+
+
+
+<% else %>
+
+  <h1>Bienvenido a NiDi App</h1>
+  <p>Debe iniciar sesión para poder utilizar las funciones.</p>
+
+<% end %>
